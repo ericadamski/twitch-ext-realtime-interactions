@@ -1,0 +1,104 @@
+{
+  "allowHttpBackend": false,
+  "backendCommand": "yarn dev",
+  "backendFolderName": "/Users/ericadamski/github/twitch-extension-realtime-interactions",
+  "certificateExceptions": [],
+  "extensionViews": [
+    {
+      "channelId": "460284418",
+      "configurationAnchor": "video_overlay",
+      "displayChannelName": "ericadamski",
+      "features": {
+        "isBitsEnabled": false,
+        "isChatEnabled": false,
+        "isSubscriptionStatusAvailable": false
+      },
+      "frameSize": {
+        "width": 1280,
+        "height": 720
+      },
+      "id": "1",
+      "isPopout": false,
+      "label": "",
+      "linked": false,
+      "linkedUserId": "",
+      "orientation": "Portrait",
+      "type": "video_overlay",
+      "viewerType": "Logged-In Viewer"
+    },
+    {
+      "channelId": "460284418",
+      "configurationAnchor": "video_overlay",
+      "displayChannelName": "ericadamski",
+      "features": {
+        "isBitsEnabled": false,
+        "isChatEnabled": false,
+        "isSubscriptionStatusAvailable": false
+      },
+      "frameSize": {
+        "width": 1280,
+        "height": 720
+      },
+      "id": "2",
+      "isPopout": false,
+      "label": "",
+      "linked": true,
+      "linkedUserId": "265737932",
+      "orientation": "Portrait",
+      "type": "video_overlay",
+      "viewerType": "Logged-In Viewer"
+    }
+  ],
+  "manifest": {
+    "anchor": "video_overlay",
+    "assetUrls": [],
+    "authorName": "Eric Adamski",
+    "bitsEnabled": false,
+    "canInstall": true,
+    "configUrl": "http://localhost:3000/config.html",
+    "configurationLocation": "none",
+    "description": "No longer just watch. No you can interact with other viewers and streamers with your cursor directly on the stream! Moving around overtop of the video player, clicking, typing and some silly interactions provide a new layer of engagement.",
+    "eulaTosUrl": "",
+    "hasChatSupport": false,
+    "iconUrl": "",
+    "iconUrls": {},
+    "id": "bidsv8dcz0igrp0y0aice2c99o8xgj",
+    "installationCount": -42,
+    "liveConfigUrl": "",
+    "name": "Realtime Cursors",
+    "panelHeight": 0,
+    "privacyPolicyUrl": "",
+    "requestIdentityLink": false,
+    "requiredBroadcasterAbilities": [],
+    "screenshotUrls": [],
+    "sku": "",
+    "state": "Testing",
+    "subscriptionsSupportLevel": "none",
+    "summary": "Interact with my stream with your mouse!",
+    "supportEmail": "er.adamski@gmail.com",
+    "vendorCode": "",
+    "version": "0.0.1",
+    "viewerSummary": "",
+    "viewerUrl": "",
+    "viewerUrls": {
+      "videoOverlay": "http://localhost:3000/video_overlay.html"
+    },
+    "views": {
+      "videoOverlay": {
+        "viewerUrl": "http://localhost:3000/video_overlay.html",
+        "canLinkExternalContent": false
+      },
+      "config": {
+        "viewerUrl": "http://localhost:3000/config.html",
+        "canLinkExternalContent": false
+      }
+    },
+    "whitelistedConfigUrls": [],
+    "whitelistedPanelUrls": []
+  },
+  "frontendCommand": "npm run dev",
+  "frontendFolderName": "/Users/ericadamski/github/twitch-extension-realtime-interactions",
+  "name": "Realtime Cursors",
+  "usingRandomFrontendHostingPort": false,
+  "version": 3
+}
