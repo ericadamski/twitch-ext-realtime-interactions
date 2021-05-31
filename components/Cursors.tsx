@@ -66,6 +66,10 @@ export function Cursors(props: Props) {
           position: mousePosition,
         });
       }
+
+      return () => {
+        cursorMap?.delete(user.id);
+      };
     }
   }, [user?.id, mousePosition, hideMouse]);
 
@@ -77,7 +81,7 @@ export function Cursors(props: Props) {
           {!hideMouse && (
             <Avatar
               user={user}
-              // isClicking={clicking}
+              isClicking={clicking}
               position={mousePosition}
               onClickAnimationFinish={onClickAnimationFinish}
             />

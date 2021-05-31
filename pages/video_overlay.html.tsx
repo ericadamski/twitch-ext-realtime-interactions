@@ -35,7 +35,6 @@ async function authRoomService(params: {
     fetch(`${EBS_URI}/api/room-service`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      credentials: "include",
       body: JSON.stringify({
         room: params.room,
         user: params.ctx.user,

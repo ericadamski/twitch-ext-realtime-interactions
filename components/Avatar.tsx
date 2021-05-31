@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from "react";
+import React, { useMemo } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
 
@@ -6,6 +6,8 @@ import type { Position } from "hooks/useUserCursor";
 import type { AnonymousTwitchUser, TwitchUser } from "lib/twitch";
 import { getCSSVarColorForString, getHexFromCSSVarColor } from "utils/colors";
 import { getSVGCursor } from "utils/cursor";
+import { EBS_URI, IS_PROD } from "utils/env";
+import { hashString } from "utils/hashString";
 
 interface Props {
   position: Position;
@@ -25,9 +27,11 @@ export function Avatar(props: Props) {
     [color]
   );
 
-  // TODO: get random user profile images
-  // get a bunch of stuff from Icons8. Maybe like 4-8?
-  const image = (props.user as TwitchUser).imageUrl;
+  const image = useMemo(
+    () =>
+      (props.user as TwitchUser).imageUrl ?? getRandomImageUrl(props.user.id),
+    [props.user]
+  );
 
   return (
     <Container
@@ -51,9 +55,7 @@ export function Avatar(props: Props) {
           )}
         </Cursor>
       )}
-      <ImageContainer>
-        {image && <Image width={32} height={32} src={image} />}
-      </ImageContainer>
+      <ImageContainer>{image && <Image src={image} />}</ImageContainer>
     </Container>
   );
 }
@@ -96,4 +98,10 @@ const Ripple = styled(motion.div)`
   z-index: -1;
 `;
 
-const Image = styled.img``;
+const Image = styled.img`
+  max-width: 100%;
+`;
+
+function getRandomImageUrl(id: string) {
+  return `${IS_PROD ? EBS_URI : ""}/images/profile-${hashString(id) % 14}.png`;
+}
