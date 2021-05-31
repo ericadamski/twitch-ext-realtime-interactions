@@ -10,6 +10,16 @@ export const GlobalStyles = createGlobalStyle`
         --extra: #e16162;
         --black: #272343;
         --white: #ffffff;
+        --sky-blue-crayola: #7bdff2;
+        --celeste: #b2f7ef;
+        --mint-cream: #eff7f6;
+        --piggy-pink: #f7d6e0;
+        --cotton-candy: #f2b5d4;
+        --mountbatten-pink: #93748a;
+        --light-coral: #ef767a;
+        --middle-blue-purple: #7d7abc;
+        --liberty: #6457a6;
+        --cerise: #db2763;
     }
 
     * {

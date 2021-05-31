@@ -15,11 +15,8 @@ export function useUserCursor(
   const [mousePosition, setMousePosition] = useState<Position>({ x: 0, y: 0 });
 
   useEffect(() => {
-    let e: Document | HTMLElement | undefined | null = captureElement?.current;
-
-    if (e == null) {
-      e = document;
-    }
+    let e: Document | HTMLElement | undefined | null =
+      captureElement?.current ?? document;
 
     if (e != null) {
       const mouseEnter$ = fromEvent(e, "mouseenter");
@@ -40,7 +37,7 @@ export function useUserCursor(
       const sub = mouse$.subscribe((event: Event) => {
         let [offsetTop, offsetLeft] = [0, 0];
 
-        if (typeof (e as HTMLElement).getBoundingClientRect != undefined) {
+        if (typeof (e as HTMLElement).getBoundingClientRect !== "undefined") {
           const { top, left } = (e as HTMLElement).getBoundingClientRect();
           offsetTop = top;
           offsetLeft = left;
