@@ -16,7 +16,7 @@ async function fetcher(
   }
 
   const [fetchError, response] = await until(() =>
-    fetch(`${EBS_URI}/${route}`, {
+    fetch(`${EBS_URI}${route}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token, oId: userId }),
