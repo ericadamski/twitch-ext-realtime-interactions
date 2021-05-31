@@ -7,6 +7,10 @@ import { getActiveTwitchToken } from "utils/getActiveTwitchToken";
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   // TODO: maybe restrict this to the twitch domain?
   res.setHeader("Access-Control-Allow-Origin", "*");
+  if (req.method === "OPTIONS") {
+    return res.end();
+  }
+
   if (req.method !== "POST") {
     return res.status(405).end();
   }
