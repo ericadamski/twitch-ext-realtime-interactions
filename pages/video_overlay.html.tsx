@@ -6,6 +6,7 @@ import type { AnonymousTwitchUser, TwitchUser } from "lib/twitch";
 import { until } from "@open-draft/until";
 import { Cursors } from "components/Cursors";
 import { useTwitchChannel } from "hooks/useTwitchChannel";
+import { EBS_URI } from "utils/env";
 
 export default function Panel() {
   const user = useTwitchUser();
@@ -31,7 +32,7 @@ async function authRoomService(params: {
   };
 }) {
   const [requestError, response] = await until(() =>
-    fetch("/api/room-service", {
+    fetch(`${EBS_URI}/api/room-service`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",

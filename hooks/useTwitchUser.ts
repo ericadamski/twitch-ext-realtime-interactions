@@ -1,9 +1,10 @@
+import { until } from "@open-draft/until";
 import { useState, useEffect } from "react";
 import useSWR from "swr";
 
 import { useTwitch } from "./useTwitch";
 import type { AnonymousTwitchUser, TwitchUser } from "lib/twitch";
-import { until } from "@open-draft/until";
+import { EBS_URI } from "utils/env";
 
 async function fetcher(
   route: string,
@@ -15,7 +16,7 @@ async function fetcher(
   }
 
   const [fetchError, response] = await until(() =>
-    fetch(route, {
+    fetch(`${EBS_URI}/${route}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ token, oId: userId }),

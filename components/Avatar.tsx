@@ -1,7 +1,6 @@
 import React, { useMemo, useRef } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import Image from "next/image";
 
 import type { Position } from "hooks/useUserCursor";
 import type { AnonymousTwitchUser, TwitchUser } from "lib/twitch";
@@ -96,3 +95,5 @@ const Ripple = styled(motion.div)`
   border-radius: 50%;
   z-index: -1;
 `;
+
+const Image = styled.img``;
