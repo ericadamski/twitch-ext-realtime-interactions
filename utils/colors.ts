@@ -63,5 +63,5 @@ export function getHexFromCSSVarColor(c: AvailableCSSVarColor) {
 }
 
 export function getCSSVarColorForString(id: string) {
-  return COLORS[hashString(id) % COLORS.length];
+  return COLORS[Math.abs(hashString(id) % COLORS.length)];
 }

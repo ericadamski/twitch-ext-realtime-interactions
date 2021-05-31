@@ -7,14 +7,8 @@ const apiKey = process.env.ROOMSERVICE_API_KEY;
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   // TODO: maybe restrict this to the twitch domain?
-  res.setHeader(
-    "Access-Control-Allow-Origin",
-    "*"
-    // I am not confident this will always work. Will have to see
-    // "https://bidsv8dcz0igrp0y0aice2c99o8xgj.ext-twitch.tv"
-  );
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Headers", "*");
-  // res.setHeader("Access-Control-Allow-Credentials", "true");
   if (req.method === "OPTIONS") {
     return res.end();
   }

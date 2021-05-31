@@ -1,6 +1,6 @@
 import { RefObject, useEffect, useState } from "react";
 import { fromEvent } from "rxjs";
-import { delay, switchMap, takeUntil, tap } from "rxjs/operators";
+import { delay, switchMap, takeUntil, tap, throttleTime } from "rxjs/operators";
 
 export interface Position {
   x: number;

@@ -1,26 +1,34 @@
-import React, { useState, useCallback, useEffect, useMemo } from "react";
-import { useMap } from "@roomservice/react";
+import React, {
+  useRef,
+  useState,
+  useCallback,
+  useEffect,
+  useMemo,
+} from "react";
+import { MapClient, useMap } from "@roomservice/react";
 import styled from "styled-components";
 import { AnimatePresence } from "framer-motion";
+import ms from "ms";
 
 import { useTwitchUser } from "hooks/useTwitchUser";
-import type { AnonymousTwitchUser, TwitchUser } from "lib/twitch";
-import { Position, useUserCursor } from "hooks/useUserCursor";
-import { Avatar } from "./Avatar";
+import { useUserCursor } from "hooks/useUserCursor";
+import { Avatar, UserCursor } from "./Avatar";
 import { getHexFromCSSVarColor, getCSSVarColorForString } from "utils/colors";
 import { getSVGCursor } from "utils/cursor";
+import { Subject } from "rxjs";
+import { throttleTime } from "rxjs/operators";
 
 interface Props {
   channelId: string;
 }
 
-interface UserCursor {
-  user: TwitchUser | AnonymousTwitchUser;
-  position: Position;
-  isClicking?: boolean;
-}
-
 export function Cursors(props: Props) {
+  const updateRemoteCursorPositionSubject = useRef<
+    Subject<{
+      data: UserCursor;
+      map: MapClient<{ [userId: string]: UserCursor }>;
+    }>
+  >(new Subject());
   const user = useTwitchUser();
   const [clicking, setClicking] = useState<boolean>(false);
   const [mousePosition, hideMouse] = useUserCursor();
@@ -36,6 +44,13 @@ export function Cursors(props: Props) {
     [user]
   );
 
+  const handleRemoveCursor = useCallback(
+    (id: string) => {
+      cursorMap?.delete(id);
+    },
+    [cursorMap]
+  );
+
   const handleClick = useCallback(() => {
     setClicking(true);
     if (cursorMap && user != null) {
@@ -48,7 +63,7 @@ export function Cursors(props: Props) {
 
   const onClickAnimationFinish = useCallback(() => {
     setClicking(false);
-    if (cursorMap && user != null) {
+    if (cursorMap && user != null && cursorMap.get(user.id)?.isClicking) {
       cursorMap.set(user.id, {
         ...cursorMap.get(user.id)!,
         isClicking: false,
@@ -61,27 +76,45 @@ export function Cursors(props: Props) {
       if (hideMouse) {
         cursorMap?.delete(user.id);
       } else {
-        cursorMap?.set(user.id, {
-          user,
-          position: mousePosition,
-        });
+        if (cursorMap != null) {
+          setClicking(false);
+          updateRemoteCursorPositionSubject.current.next({
+            map: cursorMap,
+            data: {
+              user,
+              position: mousePosition,
+              lastChange: Date.now(),
+              isClicking: false,
+            },
+          });
+        }
       }
 
-      return () => {
-        cursorMap?.delete(user.id);
-      };
+      const handler = () => handleRemoveCursor(user.id);
+      window.addEventListener("beforeunload", handler);
+
+      return () => window.removeEventListener("beforeunload", handler);
     }
   }, [user?.id, mousePosition, hideMouse]);
 
+  useEffect(() => {
+    const sub = updateRemoteCursorPositionSubject.current
+      .pipe(throttleTime(200))
+      .subscribe(({ data, map }) => map.set(data.user.id, data));
+
+    return () => sub.unsubscribe();
+  }, []);
+
   return (
-    <MousePad cursor={userCursor} onClick={handleClick}>
+    <MousePad cursor={userCursor} onMouseDown={handleClick}>
       {user && (
         <AnimatePresence>
           {/* My cursor avatar */}
           {!hideMouse && (
             <Avatar
+              channelId={props.channelId}
               user={user}
-              isClicking={clicking}
+              isClicking={Boolean(clicking)}
               position={mousePosition}
               onClickAnimationFinish={onClickAnimationFinish}
             />
@@ -91,13 +124,25 @@ export function Cursors(props: Props) {
             // Don't render my own.
             if (userId === user.id) return null;
 
+            const {
+              isClicking,
+              user: cursorUser,
+              lastChange,
+            } = cursors[userId];
+
+            if (lastChange == null || Date.now() - lastChange > ms("30s")) {
+              handleRemoveCursor(userId as string);
+
+              return null;
+            }
+
             return (
               <Avatar
                 key={userId}
+                channelId={props.channelId}
                 showCursor
-                isClicking={cursors[userId]?.isClicking}
-                user={cursors[userId].user}
-                position={cursors[userId].position}
+                isClicking={isClicking}
+                user={cursorUser}
               />
             );
           })}
