@@ -9,10 +9,15 @@ import { getSVGCursor } from "utils/cursor";
 import { EBS_URI, IS_PROD } from "utils/env";
 import { hashString } from "utils/hashString";
 import { useMap } from "@roomservice/react";
+import { useWindowSize } from "hooks/useWindowSize";
 
 export interface UserCursor {
   user: TwitchUser | AnonymousTwitchUser;
   position: Position;
+  dimensions: {
+    w: number;
+    h: number;
+  };
   isClicking?: boolean;
   lastChange?: number;
 }
@@ -27,6 +32,7 @@ interface Props {
 }
 
 export const Avatar = memo(function Avatar(props: Props) {
+  const hostDimensions = useWindowSize();
   const [cursors] = useMap<{ [userId: string]: UserCursor }>(
     props.channelId,
     "cursors"
@@ -48,13 +54,23 @@ export const Avatar = memo(function Avatar(props: Props) {
   const position = useMemo(() => {
     if (props.position) return props.position;
 
-    return myCursor?.position || { x: 0, y: 0 };
-  }, [props.position, myCursor]);
+    const remotePosition = myCursor?.position ?? { x: 0, y: 0 };
+    const remoteDimensions = myCursor?.dimensions ?? { w: 0 };
+    const wScale = (hostDimensions.width ?? 0) / remoteDimensions.w;
+
+    return {
+      x: remotePosition.x * wScale,
+      y: remotePosition.y,
+    };
+  }, [props.position, myCursor, hostDimensions]);
 
   return (
     <Container
       key={props.user.id}
-      animate={{ x: position.x + 16, y: position.y + 16 }}
+      animate={{
+        x: position.x + 16,
+        y: position.y + 16,
+      }}
       style={{
         borderColor: `var(${color})`,
       }}

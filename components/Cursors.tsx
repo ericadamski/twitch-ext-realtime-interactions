@@ -15,6 +15,7 @@ import { useUserCursor } from "hooks/useUserCursor";
 import { Avatar, UserCursor } from "./Avatar";
 import { Subject } from "rxjs";
 import { throttleTime } from "rxjs/operators";
+import { useWindowSize } from "hooks/useWindowSize";
 
 interface Props {
   channelId: string;
@@ -27,6 +28,7 @@ export function Cursors(props: Props) {
       map: MapClient<{ [userId: string]: UserCursor }>;
     }>
   >(new Subject());
+  const windowDimensions = useWindowSize();
   const user = useTwitchUser();
   const [clicking, setClicking] = useState<boolean>(false);
   const [mousePosition, hideMouse] = useUserCursor();
@@ -81,6 +83,10 @@ export function Cursors(props: Props) {
             data: {
               user,
               position: mousePosition,
+              dimensions: {
+                w: windowDimensions.width ?? 0,
+                h: windowDimensions.height ?? 0,
+              },
               lastChange: Date.now(),
               isClicking: false,
             },
@@ -93,7 +99,7 @@ export function Cursors(props: Props) {
 
       return () => window.removeEventListener("beforeunload", handler);
     }
-  }, [user?.id, mousePosition, hideMouse]);
+  }, [user?.id, mousePosition, hideMouse, windowDimensions]);
 
   useEffect(() => {
     const sub = updateRemoteCursorPositionSubject.current
