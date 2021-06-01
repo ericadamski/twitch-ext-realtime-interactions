@@ -60,11 +60,12 @@ export const Avatar = memo(function Avatar(props: Props) {
       }}
       transition={{ duration: props.showCursor ? 0.2 : 0 }}
     >
-      <Cursor cursor={props.showCursor ? cursor : undefined}>
+      <Cursor cursor={cursor}>
         {props.isClicking && (
           <Ripple
             style={{ backgroundColor: `var(${color})` }}
             animate={{ scale: [0, 6], opacity: [1, 0] }}
+            transition={{ duration: 0.2 }}
             onAnimationComplete={() => {
               if (props.onClickAnimationFinish != null)
                 props.onClickAnimationFinish();

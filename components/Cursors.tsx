@@ -13,8 +13,6 @@ import ms from "ms";
 import { useTwitchUser } from "hooks/useTwitchUser";
 import { useUserCursor } from "hooks/useUserCursor";
 import { Avatar, UserCursor } from "./Avatar";
-import { getHexFromCSSVarColor, getCSSVarColorForString } from "utils/colors";
-import { getSVGCursor } from "utils/cursor";
 import { Subject } from "rxjs";
 import { throttleTime } from "rxjs/operators";
 
@@ -36,13 +34,13 @@ export function Cursors(props: Props) {
     props.channelId,
     "cursors"
   );
-  const userCursor = useMemo(
-    () =>
-      user?.id
-        ? getSVGCursor(getHexFromCSSVarColor(getCSSVarColorForString(user.id)))
-        : "",
-    [user]
-  );
+  // const userCursor = useMemo(
+  //   () =>
+  //     user?.id
+  //       ? getSVGCursor(getHexFromCSSVarColor(getCSSVarColorForString(user.id)))
+  //       : "",
+  //   [user]
+  // );
 
   const handleRemoveCursor = useCallback(
     (id: string) => {
@@ -106,7 +104,7 @@ export function Cursors(props: Props) {
   }, []);
 
   return (
-    <MousePad cursor={userCursor} onMouseDown={handleClick}>
+    <MousePad onMouseDown={handleClick}>
       {user && (
         <AnimatePresence>
           {/* My cursor avatar */}
@@ -152,10 +150,10 @@ export function Cursors(props: Props) {
   );
 }
 
-const MousePad = styled.div<{ cursor: string }>`
+const MousePad = styled.div`
   position: relative;
   width: 100vw;
   height: 100vh;
   background-color: transparent;
-  cursor: url("${(props) => props.cursor}") 6 2, default;
+  cursor: none;
 `;
