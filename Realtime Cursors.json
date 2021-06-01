@@ -55,7 +55,7 @@
     "authorName": "Eric Adamski",
     "bitsEnabled": false,
     "canInstall": true,
-    "configUrl": "http://localhost:3000/config.html",
+    "configUrl": "https://bidsv8dcz0igrp0y0aice2c99o8xgj.ext-twitch.tv/bidsv8dcz0igrp0y0aice2c99o8xgj/0.0.1/e5d369a6ce28d5dfbb834363dae41436/config.html",
     "configurationLocation": "none",
     "description": "No longer just watch. No you can interact with other viewers and streamers with your cursor directly on the stream! Moving around overtop of the video player, clicking, typing and some silly interactions provide a new layer of engagement.",
     "eulaTosUrl": "",
@@ -76,7 +76,7 @@
     "requiredBroadcasterAbilities": [],
     "screenshotUrls": [],
     "sku": "",
-    "state": "Testing",
+    "state": "Assets Uploaded",
     "subscriptionsSupportLevel": "none",
     "summary": "Interact with my stream with your mouse!",
     "supportEmail": "er.adamski@gmail.com",
@@ -85,15 +85,15 @@
     "viewerSummary": "Hover your mouse over the stream and interact with my stream in an entire other dimension!",
     "viewerUrl": "",
     "viewerUrls": {
-      "videoOverlay": "http://localhost:3000/video_overlay.html"
+      "videoOverlay": "https://bidsv8dcz0igrp0y0aice2c99o8xgj.ext-twitch.tv/bidsv8dcz0igrp0y0aice2c99o8xgj/0.0.1/e5d369a6ce28d5dfbb834363dae41436/video_overlay.html"
     },
     "views": {
       "videoOverlay": {
-        "viewerUrl": "http://localhost:3000/video_overlay.html",
+        "viewerUrl": "https://bidsv8dcz0igrp0y0aice2c99o8xgj.ext-twitch.tv/bidsv8dcz0igrp0y0aice2c99o8xgj/0.0.1/e5d369a6ce28d5dfbb834363dae41436/video_overlay.html",
         "canLinkExternalContent": false
       },
       "config": {
-        "viewerUrl": "http://localhost:3000/config.html",
+        "viewerUrl": "https://bidsv8dcz0igrp0y0aice2c99o8xgj.ext-twitch.tv/bidsv8dcz0igrp0y0aice2c99o8xgj/0.0.1/e5d369a6ce28d5dfbb834363dae41436/config.html",
         "canLinkExternalContent": false
       }
     },
